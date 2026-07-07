@@ -59,8 +59,7 @@ public class BankAccountService {
         // 7. Check if transfer exceeds the daily limit
         BigDecimal totalWithCurrent = totalTransferredToday.add(request.getAmount());
         if (totalWithCurrent.compareTo(sourceAccount.getDailyLimit()) > 0) {
-            // Requirement specifies HTTP 429 or 403 status code with message "Quý khách đã vượt hạn mức giao dịch trong ngày"
-            throw new BusinessException(429, "Quý khách đã vượt hạn mức giao dịch trong ngày");
+            throw new com.banking.exceptions.DailyLimitExceededException("Quý khách đã vượt hạn mức giao dịch trong ngày");
         }
 
         // 8. Deduct from source and add to destination

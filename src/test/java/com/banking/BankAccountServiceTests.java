@@ -141,11 +141,10 @@ public class BankAccountServiceTests {
                 .amount(new BigDecimal("21000000.0000")) // Total will be 51 million (> 50 million limit)
                 .build();
 
-        BusinessException exception = assertThrows(BusinessException.class, () -> {
+        com.banking.exceptions.DailyLimitExceededException exception = assertThrows(com.banking.exceptions.DailyLimitExceededException.class, () -> {
             bankAccountService.transfer(request2);
         });
 
-        assertEquals(429, exception.getCode());
         assertEquals("Quý khách đã vượt hạn mức giao dịch trong ngày", exception.getMessage());
     }
 
